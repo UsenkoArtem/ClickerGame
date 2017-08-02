@@ -1,79 +1,10 @@
-<section>
-  <section>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <table class="table table-danger">
-      <tr>
-        <td> Id</td>
-        <td> FirstName</td>
-        <td> LastName</td>
-        <td> <button class="btn" (click)="addNewUser.show()">Add New User</button></td>
-      </tr>
-      <ng-container *ngFor="let user of userList" class="todo-item">
-        <tr>
-          <td>{{user.id}}</td>
-          <td>{{user.firstName}}</td>
-          <td>{{user.lastName}}</td>
-          <td>
-            <div class="btn-group" dropdown (ng-controller)="Ctrl1">
-              <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
-                Action
-              </button>
-              <ul *dropdownMenu class="dropdown-menu" role="menu">
-                <li role="menuitem" (click)='deleteUser(user.id)'><a class="dropdown-item">Delete</a></li>
-                <li role="menuitem" (click)=' updateUserModel.show()'><a class="dropdown-item">Update</a></li>
-              </ul>
-            </div>
-          </td>
-        </tr>
-      </ng-container>
-    </table>
-    <!-- User Update Dialog -->
-    <div bsModal #updateUserModel="bs-modal" class="modal fade" tabindex="-1" role="dialog"
-         aria-labelledby="mySmallModalLabel"
-         aria-hidden="true">
-      <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title pull-left">Update User</h4>
-            <button type="button" class="close pull-right" aria-label="Close" (click)="updateUserModel.hide()">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form class="todo" (ngSubmit)="updateUser();">
-              <input [(ngModel)]="newFirstName" name="newFirstName" type="text" placeholder="Your name"
-                     required="required">
-              <input [(ngModel)]="newLastName" name="newLastName" type="text" placeholder="Your lastName"
-                     required="required">
-              <button (click)="updateUserModel.hide()" type="submit">Add</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- User Update Dialog End-->
-    <!-- User Add Dialog -->
-    <div bsModal #addNewUser="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
-         aria-hidden="true">
-      <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title pull-left">Add User</h4>
-            <button type="button" class="close pull-right" aria-label="Close" (click)="addNewUser.hide()">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form class="todo" (ngSubmit)="create();">
-              <input [(ngModel)]="newFirstName" name="newFirstName" type="text" placeholder="Your name"
-                     required="required">
-              <input [(ngModel)]="newLastName" name="newLastName" type="text" placeholder="Your lastName"
-                     required="required">
-              <button (click)="addNewUser.hide()" type="submit">Add</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<router-outlet></router-outlet>
+</body>
+</html>
