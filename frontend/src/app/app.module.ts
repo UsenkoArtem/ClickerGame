@@ -10,12 +10,16 @@ import {routing} from './app.routing';
 import {LoginComponent} from './login/login.component';
 import {RouterModule} from '@angular/router';
 import {AppComponent} from './app.component';
+import {RegisterComponent} from './registry/register.component';
+import {EqualsValidatorDirective} from "./registry/equals-validator.directive";
 
 @NgModule({
   declarations: [
     AdminComponent ,
     LoginComponent ,
-    AppComponent
+    AppComponent,
+    RegisterComponent,
+    EqualsValidatorDirective
   ],
   imports: [
     BrowserModule,

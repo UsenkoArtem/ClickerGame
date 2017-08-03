@@ -43,9 +43,9 @@
           <div class="modal-body">
             <form class="todo" (ngSubmit)="updateUser();">
               <input [(ngModel)]="newFirstName" name="newFirstName" type="text" placeholder="Your name"
-                     required="required">
+                     required>
               <input [(ngModel)]="newLastName" name="newLastName" type="text" placeholder="Your lastName"
-                     required="required">
+                     required>
               <button (click)="updateUserModel.hide()" type="submit">Add</button>
             </form>
           </div>
@@ -67,9 +67,9 @@
           <div class="modal-body">
             <form class="todo" (ngSubmit)="create();">
               <input [(ngModel)]="newFirstName" name="newFirstName" type="text" placeholder="Your name"
-                     required="required">
+                     required>
               <input [(ngModel)]="newLastName" name="newLastName" type="text" placeholder="Your lastName"
-                     required="required">
+                     required>
               <button (click)="addNewUser.hide()" type="submit">Add</button>
             </form>
           </div>

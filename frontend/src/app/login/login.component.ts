@@ -3,7 +3,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 
 
 @Component({
-  selector : 'app-login',
+  selector: 'app-login',
   templateUrl: 'login.component.html'
 })
 
@@ -11,21 +11,20 @@ export class LoginComponent implements OnInit {
   model: any = {};
   loading = false;
   returnUrl: string;
+  login: string;
+  password: string;
 
   constructor(private route: ActivatedRoute,
               private router: Router) {
   }
 
   ngOnInit() {
-    // reset login status
 
-    // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  login() {
+  loginUser() {
     this.loading = true;
-    this.router.navigateByUrl('admin');
+    this.router.navigate(['admin']);
     console.log('Login');
   }
 }

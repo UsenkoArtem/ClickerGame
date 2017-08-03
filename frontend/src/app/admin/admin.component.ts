@@ -3,7 +3,7 @@ import {UserServer} from '../user-server/user-server';
 import {User} from '../user/User';
 
 @Component({
-  selector : 'art-admin',
+  selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css'],
   providers: [UserServer]
@@ -44,6 +44,8 @@ export class AdminComponent implements OnInit {
       user.id = data.id;
     });
     console.log(newUser);
+    this.newLastName = '';
+    this.newLastName = '';
     this.userList.push(newUser);
   }
 
