@@ -16,14 +16,16 @@ export class EqualsValidatorDirective implements Validator {
   }
 
   private get isReverse() {
-    if (!this.reverse) return false;
-    return this.reverse === 'true';
+    if (!this.reverse) {
+      return false; }
+      return this.reverse === 'true';
   }
 
   // Беру поле в котором этот атрибут
   validate(pas: AbstractControl): { [p: string]: any } {
     debugger
     const confirmPassword = pas.value;
+
     // Плднимаюсь в корень и беру поле c которым мы сравниваем совпадение
     const password = pas.root.get(this.validateEqual);
     // Если не совпали то ошибка

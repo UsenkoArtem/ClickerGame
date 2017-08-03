@@ -28,4 +28,9 @@ export class UserServer {
     return this.http.post(this.urlRest, user)
       .map((res: Response) => res.json());
   }
+
+  getEmail(value: any): Observable<string> {
+    return this.http.get(this.urlRest + '/search?column=email&param=' + value)
+      .map((res: Response) => res.json());
+  }
 }
