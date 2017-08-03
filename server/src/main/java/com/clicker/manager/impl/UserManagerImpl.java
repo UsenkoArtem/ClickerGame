@@ -42,7 +42,11 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public User getUserByEmail(String email) {
-        User userByEmail = userRepository.getUserByEmail(email);
-        return  userByEmail;
+        return userRepository.getUserByEmail(email);
+    }
+
+    @Override
+    public User getUserByLogin(String login) {
+        return userRepository.getUserByLogin(login);
     }
 }

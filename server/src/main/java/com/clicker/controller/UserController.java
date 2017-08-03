@@ -51,12 +51,19 @@ public class UserController {
 
 
     @GetMapping(value = "/search")
-    public  @ResponseBody
+    public @ResponseBody
     Boolean getEmail(@RequestParam("column") String column, @RequestParam("param") String param) {
-        User userByEmail = userManager.getUserByEmail(param);
-        System.out.println(param);
-        System.out.println(userByEmail);
-        return userByEmail != null;
+        if (column.toLowerCase().equals("email")) {
+            User userByEmail = userManager.getUserByEmail(param);
+            System.out.println(param);
+            System.out.println(userByEmail);
+            return userByEmail != null;
+        } else if (column.toLowerCase().equals("login")) {
+            User userByLogin = userManager.getUserByLogin(param);
+            System.out.println(param);
+            System.out.println(userByLogin);
+            return userByLogin != null;
+        }
+       return null;
     }
-
 }
