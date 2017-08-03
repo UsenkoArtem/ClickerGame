@@ -1,6 +1,6 @@
 import {AbstractControl, NG_VALIDATORS, Validator} from '@angular/forms';
 import {Attribute, Directive, forwardRef} from '@angular/core';
-import {UserServer} from '../user-server/user-server';
+import {UserService} from '../user-server/user-service';
 
 @Directive({
   selector: '[validateLogin][formControlName],[validateLogin] \n' +
@@ -12,7 +12,7 @@ import {UserServer} from '../user-server/user-server';
 export class ValidateLoginDirective implements Validator {
   private bool: any;
   constructor(@Attribute('validateLogin') public validateLogin: string,
-              public userService: UserServer) {
+              public userService: UserService) {
   }
 
   validate(c: AbstractControl): { [p: string]: any } {
