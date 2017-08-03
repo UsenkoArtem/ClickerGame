@@ -10,4 +10,5 @@ public interface UserManager {
     User getUserById(int id);
     User addNewUser(User user);
     User deleteUser(int id);
+    User getUserByEmail(String email);
 }

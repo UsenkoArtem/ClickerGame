@@ -21,4 +21,7 @@ public class User {
 
     @Column
     private String lastName;
+
+    @Column
+    private String email;
 }

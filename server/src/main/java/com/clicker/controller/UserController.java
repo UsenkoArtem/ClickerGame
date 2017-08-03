@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RequestMapping("user")
 @Controller
 public class UserController {
@@ -21,32 +21,42 @@ public class UserController {
         this.userManager = userManager;
     }
 
-    @CrossOrigin
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     List<User> getAllUser() {
         return userManager.getAllUser();
     }
 
-    @CrossOrigin
+
     @GetMapping(value = "{id}")
     public @ResponseBody
     User getUser(@PathVariable("id") int id) {
         return userManager.getUserById(id);
     }
 
-    @CrossOrigin
+
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     User addUser(@RequestBody User user) {
         return userManager.addNewUser(user);
     }
 
-    @CrossOrigin
+
     @DeleteMapping(value = "{id}")
     public @ResponseBody
     User deleteUser(@PathVariable("id") int id) {
         return userManager.deleteUser(id);
+    }
+
+
+    @GetMapping(value = "/search")
+    public  @ResponseBody
+    Boolean getEmail(@RequestParam("column") String column, @RequestParam("param") String param) {
+        User userByEmail = userManager.getUserByEmail(param);
+        System.out.println(param);
+        System.out.println(userByEmail);
+        return userByEmail != null;
     }
 
 }

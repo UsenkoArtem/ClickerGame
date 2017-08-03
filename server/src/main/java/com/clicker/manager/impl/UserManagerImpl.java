@@ -39,4 +39,10 @@ public class UserManagerImpl implements UserManager {
         userRepository.delete(userById);
         return userById;
     }
+
+    @Override
+    public User getUserByEmail(String email) {
+        User userByEmail = userRepository.getUserByEmail(email);
+        return  userByEmail;
+    }
 }
