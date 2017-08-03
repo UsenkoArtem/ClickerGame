@@ -13,6 +13,7 @@ import {AppComponent} from './app.component';
 import {RegisterComponent} from './registry/register.component';
 import {EqualsValidatorDirective} from "./registry/equals-validator.directive";
 import {ValidateEmailDirective} from "./registry/validate-email.directive";
+import {ValidateLoginDirective} from "./registry/validate-login.directive";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {ValidateEmailDirective} from "./registry/validate-email.directive";
     AppComponent,
     RegisterComponent,
     EqualsValidatorDirective,
-    ValidateEmailDirective
+    ValidateEmailDirective,
+    ValidateLoginDirective
   ],
   imports: [
     BrowserModule,

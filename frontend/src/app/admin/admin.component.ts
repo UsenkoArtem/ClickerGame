@@ -34,8 +34,8 @@ export class AdminComponent implements OnInit {
 
   create() {
     debugger;
-    let user = new User(null, this.newFirstName, this.newLastName);
-    let newUser = new User(null, '', '');
+    let user = new User(null, this.newFirstName, this.newLastName, '', '', '');
+    let newUser = new User(null, '', '', '', '', '');
     this.userService.addNewUser(user).subscribe(data => {
       console.log(data);
       newUser.id = data.id;

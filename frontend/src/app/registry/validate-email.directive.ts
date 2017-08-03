@@ -18,26 +18,27 @@ export class ValidateEmailDirective implements Validator {
 
   validate(c: AbstractControl): { [p: string]: any } {
 
-  let value = c.value;
-  var email = c;
+    const value = c.value;
+    const email = c;
     const regex = new RegExp(`^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$`);
     if (regex.test(value)) {
-
       this.userService.getEmail(value).subscribe(data => {
-        this.bool = data;
-        if (this.bool === true) {
-         email.setErrors({'validateEmail': data});
-        } else {
-          return null;
-        }
+
+          this.bool = data;
+          if (this.bool === true) {
+
+            email.setErrors({'validateEmail': data});
+          } else {
+
+            return null;
+
+          }
+
         }
       );
 
-    } else {
-      return null;
     }
-
-
+    return null;
   }
 
 }

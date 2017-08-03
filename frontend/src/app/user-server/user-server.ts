@@ -33,4 +33,9 @@ export class UserServer {
     return this.http.get(this.urlRest + '/search?column=email&param=' + value)
       .map((res: Response) => res.json());
   }
+
+  getLogin(value: any): Observable<string> {
+    return this.http.get(this.urlRest + '/search?column=login&param=' + value)
+      .map((res: Response) => res.json());
+  }
 }

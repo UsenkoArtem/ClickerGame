@@ -37,15 +37,15 @@
              name="email" [ngModel]="model.email" #email="ngModel"
              pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$"
              required
-             validateEmail="email"
+             validateEmail
 
       />
       <div [hidden]="email.valid || email.pristine" class="alert alert-warning">
         <div [hidden]="!email.hasError('required')">Email is required</div>
         <div [hidden]="!email.hasError('pattern')">Email must be correctly</div>
         <div [hidden]="!email.hasError('validateEmail')">
-        Email already used
-      </div>
+          Email already used
+        </div>
       </div>
     </div>
     <div class="form-group">
@@ -55,11 +55,15 @@
              required
              minlength="4"
              pattern='^[a-zA-Z0-9._-]+$'
+             validateLogin
       />
       <div [hidden]="login.valid || login.pristine" class="alert alert-warning">
         <div [hidden]="!login.hasError('minlength')">Login length min 4</div>
         <div [hidden]="!login.hasError('required')">Login is required</div>
         <div [hidden]="!login.hasError('pattern')">Login name should be letter and digital</div>
+        <div [hidden]="!login.hasError('validateLogin')">
+          Login already used
+        </div>
       </div>
     </div>
 

@@ -23,7 +23,7 @@ export class EqualsValidatorDirective implements Validator {
 
   // Беру поле в котором этот атрибут
   validate(pas: AbstractControl): { [p: string]: any } {
-    debugger
+    debugger;
     const confirmPassword = pas.value;
 
     // Плднимаюсь в корень и беру поле c которым мы сравниваем совпадение
