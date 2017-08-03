@@ -1,7 +1,7 @@
 package com.clicker.controller;
 
-import com.clicker.manager.UserManager;
 import com.clicker.model.User;
+import com.clicker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -13,57 +13,53 @@ import java.util.List;
 @RequestMapping("user")
 @Controller
 public class UserController {
-    private final UserManager userManager;
+    private final UserService userService;
 
 
     @Autowired
-    public UserController(UserManager userManager) {
-        this.userManager = userManager;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     List<User> getAllUser() {
-        return userManager.getAllUser();
+        return userService.getAllUser();
     }
 
 
     @GetMapping(value = "{id}")
     public @ResponseBody
-    User getUser(@PathVariable("id") int id) {
-        return userManager.getUserById(id);
+    User getUserById(@PathVariable("id") int id) {
+        return userService.getUserById(id);
     }
 
-
+    @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     User addUser(@RequestBody User user) {
-        return userManager.addNewUser(user);
+        return userService.addUser(user);
     }
 
+    @CrossOrigin
+    @PostMapping(value = "/login")
+    public @ResponseBody
+    Boolean loginUser(@RequestBody User user) {
+        return userService.loginUser(user);
+
+    }
 
     @DeleteMapping(value = "{id}")
     public @ResponseBody
-    User deleteUser(@PathVariable("id") int id) {
-        return userManager.deleteUser(id);
+    User deleteUserById(@PathVariable("id") int id) {
+        return userService.deleteUserById(id);
     }
 
 
-    @GetMapping(value = "/search")
+    @GetMapping(value = "/isRegUser")
     public @ResponseBody
-    Boolean getEmail(@RequestParam("column") String column, @RequestParam("param") String param) {
-        if (column.toLowerCase().equals("email")) {
-            User userByEmail = userManager.getUserByEmail(param);
-            System.out.println(param);
-            System.out.println(userByEmail);
-            return userByEmail != null;
-        } else if (column.toLowerCase().equals("login")) {
-            User userByLogin = userManager.getUserByLogin(param);
-            System.out.println(param);
-            System.out.println(userByLogin);
-            return userByLogin != null;
-        }
-       return null;
+    Boolean isRegUser(@RequestParam("column") String column, @RequestParam("param") String param) {
+       return  userService.findUser(column,param);
     }
 }
