@@ -5,10 +5,9 @@ import com.clicker.model.User;
 import com.clicker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-@Transactional
+
 @Repository
 public class UserManagerImpl implements UserManager {
     final

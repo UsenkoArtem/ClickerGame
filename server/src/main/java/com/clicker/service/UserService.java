@@ -11,5 +11,5 @@ public interface UserService {
     Boolean loginUser(User user);
     User deleteUserById(int  id);
     Boolean findUser(String column, String param);
-
+    User updateUser(User user);
 }

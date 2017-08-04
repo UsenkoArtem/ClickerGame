@@ -36,6 +36,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean loginUser(User user) {
         User userByLogin = userManager.getUserByLogin(user.getLogin());
+        if (userByLogin == null) return false; else
         return userByLogin.getPassword().equals(user.getPassword());
     }
 
@@ -59,5 +60,16 @@ public class UserServiceImpl implements UserService {
             return userByLogin != null;
         }
         return null;
+    }
+
+    @Override
+    public User updateUser(User user) {
+        System.out.println(user);
+        User userById = userManager.getUserById(user.getId());
+        userById.setEmail(user.getEmail());
+        userById.setFirstName(user.getFirstName());
+        userById.setLastName(user.getLastName());
+        userManager.addNewUser(userById);
+        return userById;
     }
 }

@@ -60,6 +60,15 @@ public class UserController {
     @GetMapping(value = "/isRegUser")
     public @ResponseBody
     Boolean isRegUser(@RequestParam("column") String column, @RequestParam("param") String param) {
-       return  userService.findUser(column,param);
+        System.out.println(column + " " + param);
+        return userService.findUser(column, param);
+    }
+
+    @CrossOrigin
+    @PutMapping
+    public @ResponseBody
+    User updateUser(@RequestBody User user) {
+        return userService.updateUser(user);
+
     }
 }
