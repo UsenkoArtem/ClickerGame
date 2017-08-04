@@ -4,16 +4,16 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {ModalModule} from 'ngx-bootstrap';
 import {AdminComponent} from './admin/admin.component';
-import {UserServer} from './user-server/user-server';
+import {UserService} from './user-server/user-service';
 import {BsDropdownModule} from 'ngx-bootstrap';
 import {routing} from './app.routing';
 import {LoginComponent} from './login/login.component';
 import {RouterModule} from '@angular/router';
 import {AppComponent} from './app.component';
 import {RegisterComponent} from './registry/register.component';
-import {EqualsValidatorDirective} from "./registry/equals-validator.directive";
-import {ValidateEmailDirective} from "./registry/validate-email.directive";
-import {ValidateLoginDirective} from "./registry/validate-login.directive";
+import {EqualsValidatorDirective} from './registry/equals-validator.directive';
+import {ValidateEmailDirective} from './registry/validate-email.directive';
+import {ValidateLoginDirective} from './registry/validate-login.directive';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,7 @@ import {ValidateLoginDirective} from "./registry/validate-login.directive";
     ModalModule.forRoot(),
     routing
   ],
-  providers: [UserServer],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

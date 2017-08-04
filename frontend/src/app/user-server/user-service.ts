@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 import {User} from '../user/User';
 
 @Injectable()
-export class UserServer {
+export class UserService {
   urlRest = 'http://localhost:8080/user';
 
   constructor(private http: Http) {
@@ -30,12 +30,18 @@ export class UserServer {
   }
 
   getEmail(value: any): Observable<string> {
-    return this.http.get(this.urlRest + '/search?column=email&param=' + value)
+    return this.http.get(this.urlRest + '/isRegUser?column=email&param=' + value)
       .map((res: Response) => res.json());
   }
 
   getLogin(value: any): Observable<string> {
-    return this.http.get(this.urlRest + '/search?column=login&param=' + value)
+    return this.http.get(this.urlRest + '/isRegUser?column=login&param=' + value)
       .map((res: Response) => res.json());
   }
+
+  getSigIn(user: User) {
+    return this.http.post(this.urlRest + '/login', user)
+      .map((res: Response) => res.json());
+  }
+
 }

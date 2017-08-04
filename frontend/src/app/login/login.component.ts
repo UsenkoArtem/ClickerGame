@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
+import {NgForm} from '@angular/forms';
+import {UserService} from '../user-server/user-service';
+import {User} from '../user/User';
 
 
 @Component({
@@ -9,22 +12,35 @@ import {Router, ActivatedRoute} from '@angular/router';
 
 export class LoginComponent implements OnInit {
   model: any = {};
-  loading = false;
   returnUrl: string;
   login: string;
   password: string;
+  private bool: any;
 
   constructor(private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private userService: UserService) {
   }
 
   ngOnInit() {
 
   }
 
-  loginUser() {
-    this.loading = true;
-    this.router.navigate(['admin']);
+  loginUser(form: NgForm) {
+    const user = new User(null, '', '', form.value.login, '', form.value.password);
+
+    console.log(user);
+    this.userService.getSigIn(user).subscribe(data => {
+        this.bool = data;
+        if (this.bool === true) {
+          this.router.navigate(['admin']);
+        } else {
+            alert('Password or Login incorrect');
+            return ;
+        }
+      }
+    );
+
     console.log('Login');
   }
 }

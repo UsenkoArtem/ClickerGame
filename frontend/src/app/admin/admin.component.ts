@@ -1,19 +1,19 @@
 import {Component, OnInit} from '@angular/core';
-import {UserServer} from '../user-server/user-server';
+import {UserService} from '../user-server/user-service';
 import {User} from '../user/User';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css'],
-  providers: [UserServer]
+  providers: [UserService]
 })
 export class AdminComponent implements OnInit {
   userList: User[] = [];
   public newFirstName: string;
   public newLastName: string;
 
-  constructor(private userService: UserServer) {
+  constructor(private userService: UserService) {
   }
 
   ngOnInit() {
@@ -42,16 +42,14 @@ export class AdminComponent implements OnInit {
       newUser.firstName = data.firstName;
       newUser.lastName = data.lastName;
       user.id = data.id;
+      this.userList.push(newUser);
     });
-    console.log(newUser);
     this.newLastName = '';
     this.newLastName = '';
-    this.userList.push(newUser);
   }
 
   updateUser(id) {
     console.log(id);
-
   }
 }
 
