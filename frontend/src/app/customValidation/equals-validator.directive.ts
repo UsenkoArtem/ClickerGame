@@ -10,24 +10,31 @@ import {Attribute, Directive, forwardRef} from '@angular/core';
 })
 // Кастомныйы Валидатор
 export class EqualsValidatorDirective implements Validator {
-  // Беру атребут с таким именем
+  // Беру то хранит такой атрибут
   constructor(@Attribute('validateEqual') public validateEqual: string,
               @Attribute('reverse') public reverse: string) {
   }
 
   private get isReverse() {
     if (!this.reverse) {
-      return false; }
-      return this.reverse === 'true';
+      return false;
+    }
+    return this.reverse === 'true';
   }
 
   // Беру поле в котором этот атрибут
   validate(pas: AbstractControl): { [p: string]: any } {
-    debugger;
     const confirmPassword = pas.value;
-
+    if (confirmPassword === undefined || confirmPassword === null) {
+      return null;
+    }
+    if (confirmPassword.length < 6) {return null; }
     // Плднимаюсь в корень и беру поле c которым мы сравниваем совпадение
-    const password = pas.root.get(this.validateEqual);
+    const password = pas.root.get(this.validateEqual).value;
+    if (password === undefined || password === null) {
+      return null;
+    }
+    if (password.length < 6) {return null; }
     // Если не совпали то ошибка
     if (confirmPassword !== password.value && !this.isReverse) {
       return {
@@ -42,7 +49,6 @@ export class EqualsValidatorDirective implements Validator {
         password.setErrors(null);
       }
     }
-
     // value not equal and reverse
     if (confirmPassword !== password.value && this.isReverse) {
       password.setErrors({validateEqual: false});

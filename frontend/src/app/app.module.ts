@@ -11,9 +11,10 @@ import {LoginComponent} from './login/login.component';
 import {RouterModule} from '@angular/router';
 import {AppComponent} from './app.component';
 import {RegisterComponent} from './registry/register.component';
-import {EqualsValidatorDirective} from './registry/equals-validator.directive';
-import {ValidateEmailDirective} from './registry/validate-email.directive';
-import {ValidateLoginDirective} from './registry/validate-login.directive';
+import {EqualsValidatorDirective} from './customValidation/equals-validator.directive';
+import {ValidateEmailDirective} from './customValidation/validate-email.directive';
+import {ValidateLoginDirective} from './customValidation/validate-login.directive';
+import {GameComponent} from "./game/game.component";
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {ValidateLoginDirective} from './registry/validate-login.directive';
     LoginComponent ,
     AppComponent,
     RegisterComponent,
+    GameComponent,
     EqualsValidatorDirective,
     ValidateEmailDirective,
     ValidateLoginDirective

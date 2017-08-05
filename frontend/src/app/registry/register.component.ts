@@ -9,19 +9,21 @@ import {ActivatedRoute, Router} from '@angular/router';
   templateUrl: 'register.component.html'
 })
 export class RegisterComponent {
-  model: any = {};
-
+  model = {firstName: '', lastName: '', login: '' , email: '', password: '', confirmPassword: ''};
   constructor(public  userService: UserService,
               private router: Router) {
   }
 
-  register(form: NgForm) {
-    const user = new User(null, form.value.firstName, form.value.lastName, form.value.login, form.value.email,
-      form.value.password);
+  register() {
+    debugger;
+    console.log(this.model);
+    const user = new User(null, this.model.firstName, this.model.lastName, this.model.login, this.model.email,
+      this.model.password);
     this.userService.addNewUser(user).subscribe(data => {
+      debugger
       console.log(user);
-      console.log(form);
-      this.router.navigate(['admin']);
+      console.log(this.model);
+      this.router.navigate(['game']);
     });
   }
 }

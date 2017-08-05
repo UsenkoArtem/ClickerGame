@@ -25,6 +25,8 @@ public class UserController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     List<User> getAllUser() {
+
+        System.out.println("hello");
         return userService.getAllUser();
     }
 
@@ -39,6 +41,7 @@ public class UserController {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     User addUser(@RequestBody User user) {
+        System.out.println("addUser");
         return userService.addUser(user);
     }
 

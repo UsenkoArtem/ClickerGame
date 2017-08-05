@@ -1,46 +1,40 @@
-import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {UserService} from '../user-server/user-service';
 import {User} from '../user/User';
-
 
 @Component({
   selector: 'app-login',
   templateUrl: 'login.component.html'
 })
 
-export class LoginComponent implements OnInit {
-  model: any = {};
-  returnUrl: string;
-  login: string;
-  password: string;
+export class LoginComponent {
   private bool: any;
+  loading = true;
+  model = {login: '', password: ''};
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
+  constructor(private router: Router,
               private userService: UserService) {
   }
 
-  ngOnInit() {
-
-  }
-
-  loginUser(form: NgForm) {
-    const user = new User(null, '', '', form.value.login, '', form.value.password);
-
+  loginUser() {
+    const user = new User(null, '', '', this.model.login, '', this.model.password);
     console.log(user);
     this.userService.getSigIn(user).subscribe(data => {
         this.bool = data;
-        if (this.bool === true) {
-          this.router.navigate(['admin']);
+        if (this.bool !== true) {
+          this.loading = false;
+          return;
         } else {
-            alert('Password or Login incorrect');
-            return ;
+          this.router.navigate(['game']);
         }
       }
     );
-
     console.log('Login');
+  }
+
+  register() {
+    this.router.navigate(['/home/registry']);
   }
 }

@@ -22,17 +22,25 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()
-                .anyRequest().authenticated()
-                .antMatchers(HttpMethod.DELETE, "user/**").permitAll()
-                .antMatchers(HttpMethod.POST, "user/").permitAll()
-                .and().httpBasic()
-                .authenticationEntryPoint(authEntryPoint);
+        http.csrf().disable()
+                .httpBasic().authenticationEntryPoint(authEntryPoint)
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/user").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/user/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/user/isRegUser").permitAll()
+                .antMatchers(HttpMethod.GET, "/user/isRegUser").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/user/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/user").permitAll()
+                .anyRequest().authenticated();
+
+
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("roma").password("1111").roles("USER");
+        auth.inMemoryAuthentication().
+                withUser("roma").password("1111111").roles("USER");
     }
 
 }

@@ -11,12 +11,13 @@ import {UserService} from '../user-server/user-service';
 })
 export class ValidateLoginDirective implements Validator {
   private bool: any;
-  constructor(@Attribute('validateLogin') public validateLogin: string,
-              public userService: UserService) {
+  constructor(public userService: UserService) {
   }
-
   validate(c: AbstractControl): { [p: string]: any } {
     const login = c;
+    if (login.value === null || login.value === undefined) {
+      return null;
+    }
     this.userService.getLogin(login.value).subscribe(data => {
       this.bool = data;
       if (this.bool === true) {
@@ -24,7 +25,7 @@ export class ValidateLoginDirective implements Validator {
       } else {
         return null;
       }
-  });
+    });
     return null;
-}
+  }
 }

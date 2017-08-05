@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {User} from '../user/User';
+import {map} from 'rxjs/operator/map';
 
 @Injectable()
 export class UserService {
@@ -14,7 +15,12 @@ export class UserService {
   };
 
   getAllUser(): Observable<User[]> {
-    return this.http.get(this.urlRest)
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic ' + btoa('roma' + ':' + '1111111'));
+
+    return this.http.get(this.urlRest, {
+      headers: headers
+    })
       .map((res: Response) => res.json());
   }
 
@@ -44,4 +50,13 @@ export class UserService {
       .map((res: Response) => res.json());
   }
 
+  getUserById(id: any): Observable<User> {
+    return this.http.get(this.urlRest + '/' + id)
+      .map((res: Response) => res.json());
+  }
+
+  updateUser(user: User): Observable<User> {
+    return this.http.put(this.urlRest, user)
+      .map((res: Response) => res.json());
+  }
 }
