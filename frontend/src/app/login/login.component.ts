@@ -1,8 +1,10 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
-import {UserService} from '../user-server/user-service';
+import {AdminService} from '../service/adminService/user-service';
 import {User} from '../user/User';
+import {LoginAndRegService} from "../service/logAndRegService/login-and-reg-service";
+import {error} from "selenium-webdriver";
 
 @Component({
   selector: 'app-login',
@@ -15,20 +17,18 @@ export class LoginComponent {
   model = {login: '', password: ''};
 
   constructor(private router: Router,
-              private userService: UserService) {
+              private logAndRegService: LoginAndRegService) {
   }
 
   loginUser() {
     const user = new User(null, '', '', this.model.login, '', this.model.password);
     console.log(user);
-    this.userService.getSigIn(user).subscribe(data => {
-        this.bool = data;
-        if (this.bool !== true) {
-          this.loading = false;
-          return;
-        } else {
-          this.router.navigate(['game']);
-        }
+    this.logAndRegService.getSigIn(user).subscribe(
+      data => {
+        this.router.navigate(['game']);
+      },
+      error => {
+        this.loading = false;
       }
     );
     console.log('Login');

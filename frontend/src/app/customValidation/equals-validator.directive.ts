@@ -28,6 +28,7 @@ export class EqualsValidatorDirective implements Validator {
     if (confirmPassword === undefined || confirmPassword === null) {
       return null;
     }
+    debugger;
     if (confirmPassword.length < 6) {return null; }
     // Плднимаюсь в корень и беру поле c которым мы сравниваем совпадение
     const password = pas.root.get(this.validateEqual).value;
@@ -36,14 +37,14 @@ export class EqualsValidatorDirective implements Validator {
     }
     if (password.length < 6) {return null; }
     // Если не совпали то ошибка
-    if (confirmPassword !== password.value && !this.isReverse) {
+    if (confirmPassword !== password && !this.isReverse) {
       return {
         validateEqual: false
       };
     }
 
     // value equal and reverse
-    if (confirmPassword === password.value && this.isReverse) {
+    if (confirmPassword === password && this.isReverse) {
       delete password.errors['validateEqual'];
       if (!Object.keys(password.errors).length) {
         password.setErrors(null);

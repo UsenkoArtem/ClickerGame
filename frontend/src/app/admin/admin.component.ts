@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from '../user-server/user-service';
+import {AdminService} from '../service/adminService/user-service';
 import {User} from '../user/User';
 import {NgFor} from "@angular/common";
 import {NgForm} from "@angular/forms";
@@ -8,7 +8,7 @@ import {NgForm} from "@angular/forms";
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css'],
-  providers: [UserService]
+  providers: [AdminService]
 })
 export class AdminComponent implements OnInit {
   model: any = {};
@@ -18,7 +18,7 @@ export class AdminComponent implements OnInit {
   public newLastName: string;
   private newUser: User;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: AdminService) {
   }
 
   ngOnInit() {
@@ -28,7 +28,7 @@ export class AdminComponent implements OnInit {
   deleteUser(id) {
     console.log('Delete');
     this.userService.deleteUser(id).subscribe(data => {
-        debugger;
+
         const users: User[] = [];
         this.userList.filter(item => {
           if (item.id !== data.id) {
@@ -41,26 +41,10 @@ export class AdminComponent implements OnInit {
 
   }
 
-  create() {
-    debugger;
-    let user = new User(null, this.newFirstName, this.newLastName, '', '', '');
-    let newUser = new User(null, '', '', '', '', '');
-    this.userService.addNewUser(user).subscribe(data => {
-      console.log(data);
-      newUser.id = data.id;
-      newUser.firstName = data.firstName;
-      newUser.lastName = data.lastName;
-      user.id = data.id;
-      this.userList.push(newUser);
-    });
-    this.newLastName = '';
-    this.newLastName = '';
-  }
-
   update(id) {
     console.log(id);
     this.userService.getUserById(id).subscribe(data => {
-      debugger;
+
       console.log(data);
       this.userId = data.id;
       const firstName = (<HTMLInputElement>document.getElementById('firstName'));
@@ -78,11 +62,11 @@ export class AdminComponent implements OnInit {
     const user = new User(this.userId, this.model.firstName, this.model.lastName, '', this.model.email, '');
     this.userService.updateUser(user).subscribe(data => {
       this.newUser = data;
-      this.userList.forEach(user => {
-        if (user.id === this.userId) {
-          user.lastName = this.newUser.lastName;
-          user.firstName = this.newUser.firstName;
-          user.email = this.newUser.email;
+      this.userList.forEach(data => {
+        if (data.id === this.userId) {
+          data.lastName = this.newUser.lastName;
+          data.firstName = this.newUser.firstName;
+          data.email = this.newUser.email;
         }
       });
     });

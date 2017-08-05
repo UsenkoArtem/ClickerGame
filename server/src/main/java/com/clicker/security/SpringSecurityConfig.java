@@ -26,13 +26,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().authenticationEntryPoint(authEntryPoint)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "/user").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/user/**").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/user/isRegUser").permitAll()
-                .antMatchers(HttpMethod.GET, "/user/isRegUser").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/user/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/user").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers(HttpMethod.OPTIONS, "/entrance/**").permitAll()
+                .antMatchers( "/entrance/**").permitAll()
+                .anyRequest().authenticated().and().cors();
 
 
     }
