@@ -27,7 +27,7 @@ export class AdminService {
     console.log(id);
     const headers = new Headers();
     headers.append('Authorization', 'Basic ' + btoa('roma' + ':' + '1111111'));
-    return this.http.delete(this.urlRest + '/user/' + id,{
+    return this.http.delete(this.urlRest + '/user/' + id, {
       headers: headers
     })
       .map((res: Response) => res.json());

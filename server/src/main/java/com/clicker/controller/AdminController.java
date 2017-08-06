@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
 @RequestMapping("admin")
 @RestController
 public class AdminController {
@@ -21,13 +20,11 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @CrossOrigin
     @GetMapping("/user")
     public ResponseEntity<List<User>> getAllUser() {
         return new ResponseEntity<>(userService.getAllUser(), HttpStatus.OK);
     }
 
-    @CrossOrigin
     @GetMapping(value = "/user/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
         User userById = userService.getUserById(id);
@@ -37,22 +34,21 @@ public class AdminController {
 
     }
 
-    @CrossOrigin
     @DeleteMapping(value = "/user/{id}")
     public ResponseEntity<User> deleteUserById(@PathVariable("id") int id)
 
     {
         User user = userService.deleteUserById(id);
-        if (user == null) return new ResponseEntity<User>(HttpStatus.BAD_GATEWAY); else
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+        if (user == null) return new ResponseEntity<User>(HttpStatus.BAD_GATEWAY);
+        else
+            return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
-
-    @CrossOrigin
     @PutMapping("/user")
     public ResponseEntity<User> updateUser(@RequestBody User user) {
         User updateUser = userService.updateUser(user);
-        if (updateUser == null) return new ResponseEntity<User>(HttpStatus.BAD_GATEWAY); else
+        if (updateUser == null) return new ResponseEntity<User>(HttpStatus.BAD_GATEWAY);
+        else
             return new ResponseEntity<User>(updateUser, HttpStatus.OK);
 
     }

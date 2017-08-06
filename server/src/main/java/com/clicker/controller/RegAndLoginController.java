@@ -18,7 +18,7 @@ public class RegAndLoginController {
     public RegAndLoginController(RegAndLoginService regAndLoginService) {
         this.regAndLoginService = regAndLoginService;
     }
-    @CrossOrigin
+
     @PostMapping("/registration")
     public ResponseEntity<User> registration(@RequestBody User user) {
         User registration = regAndLoginService.registration(user);
@@ -30,7 +30,7 @@ public class RegAndLoginController {
 
     }
 
-    @CrossOrigin
+
     @PostMapping(value = "/signIn")
     public ResponseEntity<User> loginUser(@RequestBody LoginDTO loginDTO) {
         User login = regAndLoginService.login(loginDTO);
@@ -40,7 +40,7 @@ public class RegAndLoginController {
             return new ResponseEntity<User>(login, HttpStatus.OK);
         }
     }
-    @CrossOrigin
+
     @GetMapping(value = "/isRegUser")
     public ResponseEntity<Boolean> isRegUser(@RequestParam("column") String column, @RequestParam("param") String param) {
         System.out.println(column + " " + param);
