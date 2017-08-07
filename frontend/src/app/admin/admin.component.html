@@ -1,17 +1,41 @@
-<section>
+
   <section>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">\
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <router-outlet></router-outlet>
-    <table class="table table-danger">
+    <table style="color: black" class="table table-striped">
       <tr>
-        <td> Id</td>
-        <td> FirstName</td>
-        <td> LastName</td>
-        <td> Login</td>
-        <td> Email</td>
-        <td> <button class="btn" (click)="addNewUser.show()">Add New User</button></td>
+        <td>
+          <button class="btn badge-pill" (click)="sortById()"> Id</button>
+        </td>
+        <td>
+          <button class="btn badge-pill" (click)="sortByFirstName()">FirstName</button>
+        </td>
+        <td>
+          <button class="btn badge-pill" (click)="sortByLastName()"> LastName</button>
+        </td>
+        <td>
+          <button class="btn badge-pill" (click)="sortByLogin()"> Login</button>
+        </td>
+        <td>
+          <button class="btn badge-pill" (click)="sortByEmail()"> Email</button>
+        </td>
+        <td></td>
+
       </tr>
-      <ng-container *ngFor="let user of userList" class="todo-item">
+      <tr>
+        <td><input type="text" [(ngModel)]="search.searchById" title="searchById" placeholder="id"
+                   (ngModelChange)="searchUser($event)"/></td>
+        <td><input [(ngModel)]="search.searchByFirstName" title="searchByFirstName" placeholder="firstName"
+                   (ngModelChange)="searchUser($event)"/></td>
+        <td><input [(ngModel)]="search.searchByLastName" title="searchByLastName" placeholder="lastName"
+                   (ngModelChange)="searchUser($event)"/></td>
+        <td><input [(ngModel)]="search.searchByLogin" title="searchByLogin" placeholder="login"
+                   (ngModelChange)="searchUser($event)"/></td>
+        <td><input [(ngModel)]="search.searchByEmail" title="searchByEmail" placeholder="email"
+                   (ngModelChange)="searchUser($event)"/></td>
+        <td></td>
+      </tr>
+      <ng-container *ngFor="let user of showUserList" class="todo-item">
         <tr>
           <td>{{user.id}}</td>
           <td>{{user.firstName}}</td>
@@ -25,7 +49,8 @@
               </button>
               <ul *dropdownMenu class="dropdown-menu" role="menu">
                 <li role="menuitem" (click)='deleteUser(user.id)'><a class="dropdown-item">Delete</a></li>
-                <li role="menuitem" (click)=' updateUserModel.show()'><a class="dropdown-item">Update</a></li>
+                <li role="menuitem" (click)=' updateUserModel.show(); update( user.id )'><a
+                  class="dropdown-item">Update</a></li>
               </ul>
             </div>
           </td>
@@ -36,7 +61,7 @@
     <div bsModal #updateUserModel="bs-modal" class="modal fade" tabindex="-1" role="dialog"
          aria-labelledby="mySmallModalLabel"
          aria-hidden="true">
-      <div class="modal-dialog modal-sm">
+      <div class="modal-dialog large-sm">
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title pull-left">Update User</h4>
@@ -45,42 +70,74 @@
             </button>
           </div>
           <div class="modal-body">
-            <form class="todo" (ngSubmit)="updateUser();">
-              <input [(ngModel)]="newFirstName" name="newFirstName" type="text" placeholder="Your name"
-                     required>
-              <input [(ngModel)]="newLastName" name="newLastName" type="text" placeholder="Your lastName"
-                     required>
-              <button (click)="updateUserModel.hide()" type="submit">Add</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- User Update Dialog End-->
-    <!-- User Add Dialog -->
-    <div bsModal #addNewUser="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
-         aria-hidden="true">
-      <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title pull-left">Add User</h4>
-            <button type="button" class="close pull-right" aria-label="Close" (click)="addNewUser.hide()">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form class="todo" (ngSubmit)="create();">
-              <input [(ngModel)]="newFirstName" name="newFirstName" type="text" placeholder="Your name"
-                     required>
-              <input [(ngModel)]="newLastName" name="newLastName" type="text" placeholder="Your lastName"
-                     required>
-              <button (click)="addNewUser.hide()" type="submit">Add</button>
+            <form class="form-group" (ngSubmit)="updateUser();" #f="ngForm" novalidate>
+              <div class="form-group">
+                <label for="firstName">First name</label>
+                <input type="text" id="firstName"
+                       pattern="^[a-zA-z\s]+$" name="firstName"
+                       [(ngModel)]="model.firstName" #firstName="ngModel"
+                       minlength="4"
+                       required>
+                <span [hidden]=" firstName.valid || firstName.pristine" class="alert alert-warning">
+                  <span [hidden]="!firstName.hasError('required')"> require</span>
+                  <span [hidden]="!firstName.hasError('pattern')">pattern</span>
+                  <span [hidden]="!firstName.hasError('minlength')"> minlength</span>
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="lastName">Last name</label>
+                <input type="text" id="lastName"
+                       [(ngModel)]="model.lastName" #lastName="ngModel" name="lastName"
+                       required
+                       pattern="^[a-zA-Z\s]+$"
+                       minlength="4">
+                <span [hidden]="lastName.valid || lastName.pristine" class="alert alert-warning">
+                  <span [hidden]="!lastName.hasError('required')">required</span>
+                  <span [hidden]="!lastName.hasError('pattern')">pattern</span>
+                  <span [hidden]="!lastName.hasError('minlength')">minlength</span>
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="email" style="padding-left: 30px;">Email </label>
+                <input disabled type="text" id="email"
+                       [(ngModel)]="model.email" name="email" #email="ngModel"
+                       required
+                       pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$"
+                       validateEmail
+                >
+                <span [hidden]="email.valid || email.pristine" class="alert alert-warning">
+                  <span [hidden]="!email.hasError('required')">required</span>
+                  <span [hidden]="!email.hasError('pattern')">pattern</span>
+                  <span [hidden]="!email.hasError('validateEmail')"> Have email </span>
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="login" style="padding-left: 30px;">Login </label>
+                <input disabled type="text" id="login"
+                       [(ngModel)]="model.login" name="login" #login="ngModel"
+                       required
+                       validateLogin
+                >
+                <span [hidden]="login.valid || login.pristine" class="alert alert-warning">
+                  <span [hidden]="!login.hasError('required')">required</span>
+                  <span [hidden]="!login.hasError('validateLogin')"> Have email </span>
+                </span>
+              </div>
+
+
+              <div class="form-group">
+                <button [disabled]="!f.form.valid" class="btn btn-info" (click)="updateUserModel.hide()" type="submit">
+                  Update
+                </button>
+              </div>
             </form>
           </div>
         </div>
       </div>
     </div>
   </section>
-</section>
-<p><a [routerLink]="['/login']">Logout</a></p>
 
+  <p><a [routerLink]="['home/login']" (click)="logout()">Logout</a></p>

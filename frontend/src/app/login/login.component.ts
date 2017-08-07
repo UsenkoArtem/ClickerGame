@@ -1,46 +1,43 @@
 import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
-import {UserService} from '../user-server/user-service';
+import {AdminService} from '../service/adminService/user-service';
 import {User} from '../user/User';
-
+import {LoginAndRegService} from "../service/logAndRegService/login-and-reg-service";
+import {error} from "selenium-webdriver";
 
 @Component({
   selector: 'app-login',
   templateUrl: 'login.component.html'
 })
 
-export class LoginComponent implements OnInit {
-  model: any = {};
-  returnUrl: string;
-  login: string;
-  password: string;
+export class LoginComponent  {
   private bool: any;
+  loading = true;
+  model = {login: '', password: ''};
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private userService: UserService) {
+  constructor(private router: Router,
+              private logAndRegService: LoginAndRegService) {
   }
 
-  ngOnInit() {
 
-  }
 
-  loginUser(form: NgForm) {
-    const user = new User(null, '', '', form.value.login, '', form.value.password);
-
+  loginUser() {
+    const user = new User(null, '', '', this.model.login, '', this.model.password);
     console.log(user);
-    this.userService.getSigIn(user).subscribe(data => {
-        this.bool = data;
-        if (this.bool === true) {
-          this.router.navigate(['admin']);
-        } else {
-            alert('Password or Login incorrect');
-            return ;
-        }
+    this.logAndRegService.getSigIn(user).subscribe(
+      data => {
+        this.router.navigate(['game']);
+        localStorage.setItem('user', JSON.stringify(data));
+      },
+      error => {
+        this.loading = false;
       }
     );
-
     console.log('Login');
+  }
+
+  register() {
+    this.router.navigate(['/home/registry']);
   }
 }

@@ -1,6 +1,6 @@
 <div class="col-md-6 col-md-offset-3">
   <h2>Register</h2>
-  <form name="form" (ngSubmit)="f.form.valid && register(f)" #f="ngForm" novalidate>
+  <form name="form" (ngSubmit)="f.valid && register()" #f="ngForm" novalidate>
     <div class="form-group">
 
 
@@ -16,6 +16,8 @@
         <div [hidden]="!firstName.hasError('required')">First name is required</div>
         <div [hidden]="!firstName.hasError('pattern')">First name should be only letter</div>
       </div>
+
+
     </div>
 
     <div class="form-group">
@@ -31,10 +33,11 @@
         <div [hidden]="!lastName.hasError('pattern')">Last name should be only letter</div>
       </div>
     </div>
+
     <div class="form-group">
       <label for="email">Email</label>
       <input type="email" id="email" class="form-control"
-             name="email" [ngModel]="model.email" #email="ngModel"
+             name="email" [(ngModel)]="model.email" #email="ngModel"
              pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$"
              required
              validateEmail
@@ -88,17 +91,20 @@
              required
              validateEqual="password"
              minlength="6"
-             [(ngModel)]="model.confirmPassword" name="confirmPassword" #confirmPassword="ngModel"/>
+             [(ngModel)]='model.confirmPassword' name="confirmPassword" #confirmPassword="ngModel"
+      />
+
       <div [hidden]="confirmPassword.valid || confirmPassword.pristine" class="alert alert-danger">
         <div [hidden]="!confirmPassword.hasError('minlength')"> Password length min 6</div>
+        <div [hidden]="!confirmPassword.hasError('required')"> Password required</div>
         <div [hidden]="!confirmPassword.valid && confirmPassword.hasError('minlength')">
           Password mismatch
         </div>
       </div>
     </div>
     <div class="form-group">
-      <button [disabled]="!f.form.valid" class="btn btn-primary">Register</button>
-      <a [routerLink]="['/login']" class="btn btn-link">Cancel</a>
+      <button [disabled]="!f.valid" class="btn btn-primary">Register</button>
+      <a [routerLink]="['/login']" class="btn btn-link">Login</a>
     </div>
   </form>
 </div>

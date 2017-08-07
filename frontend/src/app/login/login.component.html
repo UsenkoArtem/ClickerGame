@@ -1,7 +1,8 @@
+
 <div class="col-md-6 col-md-offset-3">
   <h2>Login page</h2>
   <br>
-  <form name="form" (ngSubmit)="form.form.valid && loginUser(form)" #form="ngForm" novalidate>
+  <form name="form" (ngSubmit)="form.valid && loginUser()" #form="ngForm" novalidate>
     <div class="form-group">
       <label for="login">Login</label>
       <input type="text" id="login" class="form-control"
@@ -27,9 +28,11 @@
         <div [hidden]="!password.hasError('required')">Password required</div>
       </div>
     </div>
+    <div  [hidden]="loading" class="alert alert-warning" id="incorrect">Login or password incorrect</div>
     <div class="form-group">
       <button [disabled]="!form.valid" class="btn btn-primary">Login</button>
-      <a [routerLink]="['/registry']" class="btn btn-link">Register</a>
+      <button (click)="register()" class="btn btn-primary">Register</button>
     </div>
   </form>
 </div>
+

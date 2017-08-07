@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 @Configuration
@@ -14,25 +15,30 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationEntryPoint authEntryPoint;
-
+private final UserDetailsService userDetailsService;
     @Autowired
-    public SpringSecurityConfig(AuthenticationEntryPoint authEntryPoint) {
+    public SpringSecurityConfig(AuthenticationEntryPoint authEntryPoint, UserDetailsService userDetailsService) {
         this.authEntryPoint = authEntryPoint;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()
+        http.csrf().disable()
+                .httpBasic().authenticationEntryPoint(authEntryPoint)
+                .and()
+                .authorizeRequests()
+               .antMatchers(HttpMethod.OPTIONS, "/entrance/**").permitAll()
+                .antMatchers( "/entrance/**").permitAll()
                 .anyRequest().authenticated()
-                .antMatchers(HttpMethod.DELETE, "user/**").permitAll()
-                .antMatchers(HttpMethod.POST, "user/").permitAll()
-                .and().httpBasic()
-                .authenticationEntryPoint(authEntryPoint);
+                .and().cors();
+
+
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("roma").password("1111").roles("USER");
+       auth.userDetailsService(userDetailsService);
     }
 
 }

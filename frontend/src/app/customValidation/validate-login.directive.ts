@@ -1,6 +1,7 @@
 import {AbstractControl, NG_VALIDATORS, Validator} from '@angular/forms';
 import {Attribute, Directive, forwardRef} from '@angular/core';
-import {UserService} from '../user-server/user-service';
+import {AdminService} from '../service/adminService/user-service';
+import {LoginAndRegService} from "../service/logAndRegService/login-and-reg-service";
 
 @Directive({
   selector: '[validateLogin][formControlName],[validateLogin] \n' +
@@ -11,20 +12,23 @@ import {UserService} from '../user-server/user-service';
 })
 export class ValidateLoginDirective implements Validator {
   private bool: any;
-  constructor(@Attribute('validateLogin') public validateLogin: string,
-              public userService: UserService) {
+  constructor(public loginAndRegService: LoginAndRegService) {
   }
-
   validate(c: AbstractControl): { [p: string]: any } {
     const login = c;
-    this.userService.getLogin(login.value).subscribe(data => {
+    if (login.value === null || login.value === undefined) {
+      return null;
+    }
+    if (login.value.length < 4) return null;
+    this.loginAndRegService.getLogin(login.value).subscribe(data => {
+      debugger;
       this.bool = data;
       if (this.bool === true) {
         login.setErrors({'validateLogin': data});
       } else {
         return null;
       }
-  });
+    });
     return null;
-}
+  }
 }
