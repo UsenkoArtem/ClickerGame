@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {AdminService} from '../service/adminService/user-service';
@@ -11,7 +11,7 @@ import {error} from "selenium-webdriver";
   templateUrl: 'login.component.html'
 })
 
-export class LoginComponent {
+export class LoginComponent  {
   private bool: any;
   loading = true;
   model = {login: '', password: ''};
@@ -20,12 +20,15 @@ export class LoginComponent {
               private logAndRegService: LoginAndRegService) {
   }
 
+
+
   loginUser() {
     const user = new User(null, '', '', this.model.login, '', this.model.password);
     console.log(user);
     this.logAndRegService.getSigIn(user).subscribe(
       data => {
         this.router.navigate(['game']);
+        localStorage.setItem('user', JSON.stringify(data));
       },
       error => {
         this.loading = false;

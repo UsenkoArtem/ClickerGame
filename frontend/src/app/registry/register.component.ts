@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
 import {User} from '../user/User';
-import {AdminService} from '../service/adminService/user-service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {LoginAndRegService} from "../service/logAndRegService/login-and-reg-service";
+import {LoginAndRegService} from '../service/logAndRegService/login-and-reg-service';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +10,7 @@ import {LoginAndRegService} from "../service/logAndRegService/login-and-reg-serv
 export class RegisterComponent {
   model = {firstName: '', lastName: '', login: '' , email: '', password: '', confirmPassword: ''};
   constructor(public  logAndRegService: LoginAndRegService,
-              private router: Router) {
+              public  router: Router) {
   }
 
   register() {
@@ -21,7 +19,6 @@ export class RegisterComponent {
       this.model.password);
     this.logAndRegService.addNewUser(user).subscribe(data => {
       debugger
-      console.log(user);
       this.router.navigate(['game']);
       location.reload();
     });

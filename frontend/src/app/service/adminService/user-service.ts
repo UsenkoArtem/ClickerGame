@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, Headers, RequestOptions} from '@angular/http';
+import {Http, Response, Headers} from '@angular/http';
 
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {User} from '../../user/User';
-import {map} from 'rxjs/operator/map';
 
 @Injectable()
 export class AdminService {
@@ -15,8 +14,10 @@ export class AdminService {
   };
 
   getAllUser(): Observable<User[]> {
+
     const headers = new Headers();
     headers.append('Authorization', 'Basic ' + btoa('roma' + ':' + '1111111'));
+
     return this.http.get(this.urlRest + '/user', {
       headers: headers
     })
@@ -34,7 +35,12 @@ export class AdminService {
   }
 
   getUserById(id: any): Observable<User> {
-    return this.http.get(this.urlRest + '/user/' + id)
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic ' + btoa('roma' + ':' + '1111111'));
+    return this.http.get(this.urlRest + '/user/' + id,
+      {
+        headers: headers
+      })
       .map((res: Response) => res.json());
   }
 

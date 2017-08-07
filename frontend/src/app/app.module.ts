@@ -3,13 +3,12 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
-import {ModalModule} from 'ngx-bootstrap';
+import {ModalModule, PaginationModule} from 'ngx-bootstrap';
 import {AdminComponent} from './admin/admin.component';
 import {AdminService} from './service/adminService/user-service';
 import {BsDropdownModule} from 'ngx-bootstrap';
 import {routing} from './app.routing';
 import {LoginComponent} from './login/login.component';
-import {RouterModule} from '@angular/router';
 import {AppComponent} from './app.component';
 import {RegisterComponent} from './registry/register.component';
 import {EqualsValidatorDirective} from './customValidation/equals-validator.directive';
@@ -17,6 +16,7 @@ import {ValidateEmailDirective} from './customValidation/validate-email.directiv
 import {ValidateLoginDirective} from './customValidation/validate-login.directive';
 import {GameComponent} from './game/game.component';
 import {LoginAndRegService} from './service/logAndRegService/login-and-reg-service';
+import {GameService} from './service/gameService/game-service';
 
 @NgModule({
   declarations: [
@@ -30,6 +30,7 @@ import {LoginAndRegService} from './service/logAndRegService/login-and-reg-servi
     ValidateLoginDirective
   ],
   imports: [
+    PaginationModule.forRoot(),
     BrowserModule,
     FormsModule,
     HttpModule,
@@ -37,7 +38,7 @@ import {LoginAndRegService} from './service/logAndRegService/login-and-reg-servi
     ModalModule.forRoot(),
     routing
   ],
-  providers: [AdminService, LoginAndRegService],
+  providers: [AdminService, LoginAndRegService, GameService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

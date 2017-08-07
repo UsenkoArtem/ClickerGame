@@ -1,16 +1,41 @@
-<section>
+
   <section>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <router-outlet></router-outlet>
-    <table class="table table-danger">
+    <table style="color: black" class="table table-striped">
       <tr>
-        <td> Id</td>
-        <td> FirstName</td>
-        <td> LastName</td>
-        <td> Login</td>
-        <td> Email</td>
+        <td>
+          <button class="btn badge-pill" (click)="sortById()"> Id</button>
+        </td>
+        <td>
+          <button class="btn badge-pill" (click)="sortByFirstName()">FirstName</button>
+        </td>
+        <td>
+          <button class="btn badge-pill" (click)="sortByLastName()"> LastName</button>
+        </td>
+        <td>
+          <button class="btn badge-pill" (click)="sortByLogin()"> Login</button>
+        </td>
+        <td>
+          <button class="btn badge-pill" (click)="sortByEmail()"> Email</button>
+        </td>
+        <td></td>
+
       </tr>
-      <ng-container *ngFor="let user of userList" class="todo-item">
+      <tr>
+        <td><input type="text" [(ngModel)]="search.searchById" title="searchById" placeholder="id"
+                   (ngModelChange)="searchUser($event)"/></td>
+        <td><input [(ngModel)]="search.searchByFirstName" title="searchByFirstName" placeholder="firstName"
+                   (ngModelChange)="searchUser($event)"/></td>
+        <td><input [(ngModel)]="search.searchByLastName" title="searchByLastName" placeholder="lastName"
+                   (ngModelChange)="searchUser($event)"/></td>
+        <td><input [(ngModel)]="search.searchByLogin" title="searchByLogin" placeholder="login"
+                   (ngModelChange)="searchUser($event)"/></td>
+        <td><input [(ngModel)]="search.searchByEmail" title="searchByEmail" placeholder="email"
+                   (ngModelChange)="searchUser($event)"/></td>
+        <td></td>
+      </tr>
+      <ng-container *ngFor="let user of showUserList" class="todo-item">
         <tr>
           <td>{{user.id}}</td>
           <td>{{user.firstName}}</td>
@@ -50,7 +75,7 @@
                 <label for="firstName">First name</label>
                 <input type="text" id="firstName"
                        pattern="^[a-zA-z\s]+$" name="firstName"
-                      [(ngModel)]="model.firstName" #firstName="ngModel"
+                       [(ngModel)]="model.firstName" #firstName="ngModel"
                        minlength="4"
                        required>
                 <span [hidden]=" firstName.valid || firstName.pristine" class="alert alert-warning">
@@ -63,7 +88,7 @@
               <div class="form-group">
                 <label for="lastName">Last name</label>
                 <input type="text" id="lastName"
-                       [(ngModel)]="model.lastName"   #lastName="ngModel" name="lastName"
+                       [(ngModel)]="model.lastName" #lastName="ngModel" name="lastName"
                        required
                        pattern="^[a-zA-Z\s]+$"
                        minlength="4">
@@ -91,8 +116,8 @@
 
               <div class="form-group">
                 <label for="login" style="padding-left: 30px;">Login </label>
-                <input  disabled type="text" id="login"
-                       [(ngModel)]="model.login"  name="login" #login="ngModel"
+                <input disabled type="text" id="login"
+                       [(ngModel)]="model.login" name="login" #login="ngModel"
                        required
                        validateLogin
                 >
@@ -114,5 +139,5 @@
       </div>
     </div>
   </section>
-  <p><a [routerLink]="['home/login']">Logout</a></p>
-</section>
+
+  <p><a [routerLink]="['home/login']" (click)="logout()">Logout</a></p>

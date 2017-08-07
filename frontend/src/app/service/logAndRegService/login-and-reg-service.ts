@@ -29,7 +29,7 @@ export class LoginAndRegService {
       });
   }
 
-  getSigIn(user: User) {
+  getSigIn(user: User): Observable<User>  {
     const userDTO = {login: '', password: ''};
     userDTO.login = user.login;
     userDTO.password = user.password;
