@@ -38,7 +38,7 @@ public class RegAndLoginServiceImpl implements RegAndLoginService {
         if (userByEmail != null || userByLogin != null) return null;
         userManager.addNewUser(user);
         try {
-            userRoleManager.addUserRole(user, "user");
+            userRoleManager.addUserRole(user, "ROLE_USER");
         } catch (SQLIntegrityConstraintViolationException e) {
             e.printStackTrace();
         }
