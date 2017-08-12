@@ -26,15 +26,20 @@ public class ResourceManagerImpl implements ResourceManager {
         return resourceRepository.getResourceByName(name);
 
     }
-
+    @Override
+    public  Resource getResourceById(Integer id){
+        return resourceRepository.getResourceById(id);
+    }
     @Override
     public Resource addResource(Resource resource) {
         return resourceRepository.save(resource);
     }
 
     @Override
-    public void deleteResource(String name) {
+    public Resource deleteResourceByName(String name) {
+        Resource resourceByName = resourceRepository.getResourceByName(name);
         resourceRepository.deleteByName(name);
+        return  resourceByName;
     }
 
 }

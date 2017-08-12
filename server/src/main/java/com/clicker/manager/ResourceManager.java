@@ -9,7 +9,9 @@ public interface ResourceManager {
 
     Resource getResourceByName(String name);
 
+    Resource getResourceById(Integer id);
+
     Resource addResource(Resource resource);
 
-    void deleteResource(String name);
+    Resource deleteResourceByName(String name);
 }

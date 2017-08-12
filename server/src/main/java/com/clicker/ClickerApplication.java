@@ -1,5 +1,7 @@
 package com.clicker;
 
+import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -21,9 +23,10 @@ public class ClickerApplication {
 		return new WebMvcConfigurerAdapter() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-						.allowedOrigins("http://localhost:4200");
+				registry.addMapping("/**");
+
 			}
 		};
 	}
+
 }

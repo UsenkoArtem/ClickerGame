@@ -23,7 +23,6 @@ public class UserRoleManagerImpl implements UserRoleManager {
     }
 
     private Boolean checkPresenceUser(User user) {
-        System.out.println("check " + user);
         return (userManager.getUserById(user.getId()) != null);
     }
 
