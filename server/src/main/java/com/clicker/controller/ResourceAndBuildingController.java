@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RequestMapping("admin")
 @RestController
@@ -22,6 +24,43 @@ public class ResourceAndBuildingController {
         this.resourceAndBuildingService = resourceAndBuildingService;
     }
 
+    @GetMapping("/initBuilding")
+    public ResponseEntity<Building> initBuildings() {
+        Resource inResource = new Resource();
+        Set<Resource> setInResource = new HashSet<>();
+        setInResource.add(inResource);
+
+
+        Resource outResource = new Resource();
+        Set<Resource> setOutResource = new HashSet<>();
+        setOutResource.add(outResource);
+
+        Building building = new Building();
+        building.setBasicCost(70.0);
+        building.setName("sawmill");
+        building.setBasicLvlMultiplierProd(1.0);
+        building.setBasicLvlUpMultiplierCost(1.32);
+        building.setBasicProduction(2.5);
+        building.setBasicConsume(1.5);
+        building.setBasicQuality(1.0);
+        building.setInResource(setInResource);
+        building.setOutResource(setOutResource);
+        inResource.setInBuilding(building);
+        outResource.setOutBuilding(building);
+
+        return new  ResponseEntity<>(resourceAndBuildingService.addBuilding(building), HttpStatus.OK);
+
+
+    }
+    @GetMapping("/dropBuilding")
+    public ResponseEntity<List<Building>> dropBuilding(){
+        resourceAndBuildingService.deleteBuilding("sawmill");
+        resourceAndBuildingService.deleteResource("wood");
+        resourceAndBuildingService.deleteResource("board");
+        List<Building> buildings = resourceAndBuildingService.getAllBuildings();
+        log.info("All buildings fetch successful");
+        return new ResponseEntity<>(buildings, HttpStatus.OK);
+    }
     @GetMapping("/resource")
     public ResponseEntity<List<Resource>> getAllResource() {
         List<Resource> resources = resourceAndBuildingService.getAllResources();
@@ -52,12 +91,12 @@ public class ResourceAndBuildingController {
 
     @PostMapping("/building")
     public ResponseEntity<Building> addBuilding(@RequestBody Building building) {
-        if (resourceAndBuildingService.getResourceById(building.getResourceID()) == null) {
-            log.info("resource added failed");
-            return new ResponseEntity<Building>(HttpStatus.BAD_GATEWAY);
-        } else
-            log.info("resource added successful");
-            return new ResponseEntity<Building>(resourceAndBuildingService.addBuilding(building), HttpStatus.OK);
+//        if (resourceAndBuildingService.getResourceById(building.getResourceID()) == null) {
+//            log.info("resource added failed");
+//            return new ResponseEntity<Building>(HttpStatus.BAD_GATEWAY);
+//        } else
+        log.info("resource added successful");
+        return new ResponseEntity<Building>(resourceAndBuildingService.addBuilding(building), HttpStatus.OK);
     }
 
     @DeleteMapping("/building")
