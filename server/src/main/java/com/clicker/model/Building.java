@@ -1,6 +1,8 @@
 package com.clicker.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -10,26 +12,14 @@ import java.util.Set;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class , property = "id")
 public class Building {
-    @Override
-    public String toString() {
-        return "Building{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", basicCost=" + basicCost +
-                ", basicLvlUpMultiplierCost=" + basicLvlUpMultiplierCost +
-                ", basicProduction=" + basicProduction +
-                ", basicConsume=" + basicConsume +
-                ", basicLvlMultiplierProd=" + basicLvlMultiplierProd +
-                ", basicQuality=" + basicQuality +
-                ", inResource=" + inResource.toString() +
-                ", outResource=" + outResource.toString() +
-                '}';
-    }
+
 
     @Id
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
@@ -60,6 +50,18 @@ public class Building {
     @OneToMany(mappedBy = "outBuilding", cascade = CascadeType.ALL)
     Set<Resource> outResource;
 
+    public Building(String name, Double basicCost, Double basicLvlUpMultiplierCost, Double basicProduction, Double basicConsume, Double basicLvlMultiplierProd, Double basicQuality, Set<Resource> inResource, Set<Resource> outResource) {
+        this.name = name;
+        this.basicCost = basicCost;
+        this.basicLvlUpMultiplierCost = basicLvlUpMultiplierCost;
+        this.basicProduction = basicProduction;
+        this.basicConsume = basicConsume;
+        this.basicLvlMultiplierProd = basicLvlMultiplierProd;
+        this.basicQuality = basicQuality;
+        this.inResource = inResource;
+        this.outResource = outResource;
+    }
 
-
+    public Building() {
+    }
 }

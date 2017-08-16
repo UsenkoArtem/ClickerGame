@@ -52,15 +52,7 @@ public class ResourceAndBuildingController {
 
 
     }
-    @GetMapping("/dropBuilding")
-    public ResponseEntity<List<Building>> dropBuilding(){
-        resourceAndBuildingService.deleteBuilding("sawmill");
-        resourceAndBuildingService.deleteResource("wood");
-        resourceAndBuildingService.deleteResource("board");
-        List<Building> buildings = resourceAndBuildingService.getAllBuildings();
-        log.info("All buildings fetch successful");
-        return new ResponseEntity<>(buildings, HttpStatus.OK);
-    }
+
     @GetMapping("/resource")
     public ResponseEntity<List<Resource>> getAllResource() {
         List<Resource> resources = resourceAndBuildingService.getAllResources();
