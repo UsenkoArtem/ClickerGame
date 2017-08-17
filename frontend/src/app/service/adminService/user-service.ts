@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {Http, Response, Headers} from '@angular/http';
 
 import {Observable} from 'rxjs/Rx';
@@ -7,16 +7,20 @@ import 'rxjs/add/operator/catch';
 import {User} from '../../user/User';
 
 @Injectable()
-export class AdminService {
+export class AdminService{
   urlRest = 'http://localhost:8080/admin';
-
+  user  = JSON.parse(localStorage.getItem('user'));
+  userName = this.user.login;
+  userPass = this.user.password;
   constructor(private http: Http) {
   };
 
   getAllUser(): Observable<User[]> {
 
     const headers = new Headers();
-    headers.append('Authorization', 'Basic ' + btoa('roma' + ':' + '1111111'));
+
+
+    headers.append('Authorization', 'Basic ' + btoa(  this.userName+ ':' + this.userPass));
 
     return this.http.get(this.urlRest + '/user', {
       headers: headers
@@ -27,7 +31,7 @@ export class AdminService {
   deleteUser(id): Observable<User> {
     console.log(id);
     const headers = new Headers();
-    headers.append('Authorization', 'Basic ' + btoa('roma' + ':' + '1111111'));
+    headers.append('Authorization', 'Basic ' + btoa(  this.userName+ ':' + this.userPass));
     return this.http.delete(this.urlRest + '/user/' + id, {
       headers: headers
     })
@@ -36,7 +40,7 @@ export class AdminService {
 
   getUserById(id: any): Observable<User> {
     const headers = new Headers();
-    headers.append('Authorization', 'Basic ' + btoa('roma' + ':' + '1111111'));
+    headers.append('Authorization', 'Basic ' + btoa(  this.userName+ ':' + this.userPass));
     return this.http.get(this.urlRest + '/user/' + id,
       {
         headers: headers
@@ -45,7 +49,11 @@ export class AdminService {
   }
 
   updateUser(user: User): Observable<User> {
-    return this.http.put(this.urlRest + '/user', user)
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic ' + btoa(  this.userName+ ':' + this.userPass));
+    return this.http.put(this.urlRest + '/user',user,{
+      headers: headers
+    } )
       .map((res: Response) => res.json());
   }
 }

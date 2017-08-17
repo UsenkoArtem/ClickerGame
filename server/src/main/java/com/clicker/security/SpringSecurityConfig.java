@@ -30,7 +30,7 @@ private final UserDetailsService userDetailsService;
                 .authorizeRequests()
                .antMatchers(HttpMethod.OPTIONS, "/entrance/**").permitAll()
                 .antMatchers( "/entrance/**").permitAll()
-                .anyRequest().permitAll()
+                .anyRequest().hasRole("USER")
                 .and().cors();
 
 
