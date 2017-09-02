@@ -11,7 +11,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @SpringBootApplication
 @EnableJpaRepositories("com.clicker.repository")
 public class ClickerApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(ClickerApplication.class, args);
     }

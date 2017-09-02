@@ -18,6 +18,13 @@ public class RegAndLoginServiceImpl implements RegAndLoginService {
     public RegAndLoginServiceImpl(UserManager userManager, UserRoleManager userRoleManager) {
         this.userManager = userManager;
         this.userRoleManager = userRoleManager;
+@Service
+public class RegAndLoginServiceImpl implements RegAndLoginService {
+    private final UserManager userManager;
+
+    @Autowired
+    public RegAndLoginServiceImpl(UserManager userManager) {
+        this.userManager = userManager;
     }
 
     @Override
@@ -43,7 +50,7 @@ public class RegAndLoginServiceImpl implements RegAndLoginService {
             e.printStackTrace();
         }
         return user;
-    }
+}
 
 
 

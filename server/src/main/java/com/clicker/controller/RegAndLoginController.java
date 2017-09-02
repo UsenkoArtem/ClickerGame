@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 public class RegAndLoginController {
     private static final Logger log = Logger.getLogger(RegAndLoginController.class);
     private final RegAndLoginService regAndLoginService;
-
     @Autowired
     public RegAndLoginController(RegAndLoginService regAndLoginService) {
         this.regAndLoginService = regAndLoginService;
@@ -28,9 +27,8 @@ public class RegAndLoginController {
             return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         } else {
             log.info("Registration successful");
-            return new ResponseEntity<>(registration, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         }
-
     }
 
 
@@ -42,17 +40,15 @@ public class RegAndLoginController {
             return new ResponseEntity<User>(HttpStatus.BAD_GATEWAY);
         } else {
             log.info("Sing In successful");
-            return new ResponseEntity<User>(login, HttpStatus.OK);
+            return new ResponseEntity<User>(HttpStatus.BAD_GATEWAY);
         }
     }
 
-    //не понимаю что это
     @GetMapping(value = "/isRegUser")
     public ResponseEntity<Boolean> isRegUser(@RequestParam("column") String column, @RequestParam("param") String param) {
         log.info(column + " " + param);
         Boolean user = regAndLoginService.findUser(column, param);
         if (user == null) return new ResponseEntity<Boolean>(HttpStatus.BAD_GATEWAY);
-        return new ResponseEntity<Boolean>(user, HttpStatus.OK);
-    }
+        return new ResponseEntity<Boolean>(user, HttpStatus.OK); }
 
 }

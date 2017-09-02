@@ -46,7 +46,6 @@ public class AdminController {
         } else
             log.info("User founded:" + userById);
         return new ResponseEntity<>(userById, HttpStatus.OK);
-
     }
 
     @DeleteMapping(value = "/user/{id}")
@@ -74,6 +73,7 @@ public class AdminController {
             log.info("User updated");
             return new ResponseEntity<User>(updateUser, HttpStatus.OK);
         }
+
 
     }
 }
