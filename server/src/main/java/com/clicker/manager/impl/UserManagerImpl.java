@@ -1,8 +1,10 @@
 package com.clicker.manager.impl;
 
+import com.clicker.controller.AdminController;
 import com.clicker.manager.UserManager;
 import com.clicker.model.User;
 import com.clicker.repository.UserRepository;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +14,7 @@ import java.util.List;
 public class UserManagerImpl implements UserManager {
     final
     UserRepository userRepository;
+    private static final Logger log = Logger.getLogger(AdminController.class);
 
     @Autowired
     public UserManagerImpl(UserRepository userRepository) {
@@ -20,7 +23,9 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public List<User> getAllUser() {
-        return (List<User>) userRepository.findAll();
+        List<User> userList = (List<User>) userRepository.findAll();
+        log.info("Users: " + userList);
+        return userList;
     }
 
     @Override

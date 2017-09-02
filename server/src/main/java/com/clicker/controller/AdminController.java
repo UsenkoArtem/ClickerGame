@@ -44,7 +44,7 @@ public class AdminController {
             log.info("User not found: " + id);
             return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         } else
-            log.info("User founded:");
+            log.info("User founded:" + userById);
         return new ResponseEntity<>(userById, HttpStatus.OK);
 
     }
@@ -64,7 +64,9 @@ public class AdminController {
 
     @PutMapping("/user")
     public ResponseEntity<User> updateUser(@RequestBody User user) {
+        log.info("user update: " + user);
         User updateUser = userService.updateUser(user);
+        log.info("user udated: " + updateUser);
         if (updateUser == null) {
             log.info("User not found: " + user.getId());
             return new ResponseEntity<User>(HttpStatus.BAD_GATEWAY);

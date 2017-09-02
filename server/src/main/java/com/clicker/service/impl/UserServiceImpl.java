@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     public User updateUser(User user) {
         User userById = userManager.getUserById(user.getId());
         if (userById == null) return null;
-        userById.setEmail(user.getEmail());
+
         userById.setFirstName(user.getFirstName());
         userById.setLastName(user.getLastName());
         userManager.addNewUser(userById);

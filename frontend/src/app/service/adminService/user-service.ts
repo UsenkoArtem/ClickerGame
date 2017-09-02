@@ -50,6 +50,7 @@ export class AdminService{
 
   updateUser(user: User): Observable<User> {
     const headers = new Headers();
+    console.log(user);
     headers.append('Authorization', 'Basic ' + btoa(  this.userName+ ':' + this.userPass));
     return this.http.put(this.urlRest + '/user',user,{
       headers: headers

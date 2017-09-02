@@ -30,12 +30,13 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     this.userService.getAllUser().subscribe(data => {
       this.allUsers = data;
+      console.log(data);
       this.showUserList = data;
     });
-    this.userService.getAllUser().subscribe(data => {
-      this.allUsers = data;
-      this.showUserList = data;
-    });
+    // this.userService.getAllUser().subscribe(data => {
+    //   this.allUsers = data;
+    //   this.showUserList = data;
+    // });
   }
 
   public pageChanged(event: any): void {
@@ -158,14 +159,15 @@ export class AdminComponent implements OnInit {
   }
 
   updateUser() {
-    const user = new User(this.userId, this.model.firstName, this.model.lastName, '', this.model.email, '');
+    const user = new User(this.userId, this.model.firstName, this.model.lastName, this.model.login, this.model.email, '');
+    console.log("AdminComponent user: ");
+    console.log(user);
     this.userService.updateUser(user).subscribe(data => {
       this.newUser = data;
       this.showUserList.forEach(data => {
         if (data.id === this.userId) {
           data.lastName = this.newUser.lastName;
           data.firstName = this.newUser.firstName;
-          data.email = this.newUser.email;
         }
       });
     });
